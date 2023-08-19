@@ -80,8 +80,14 @@ function ensureAuthenticated(req, res, next) {
 
 app.route('/auth/github/callback')
 .get(passport.authenticate('github', { failureRedirect: '/' }), (req,res) => {
-    res.redirect('/profile');
+    res.redirect('/chat', req.session.user_id = req.user.id);
   });
+
+app.route('/chat')
+    .get(ensureAuthenticated, (res,req) => {
+    res.render('chat', {user: req.user})
+        })
+
 
   app.use((req, res, next) => {
     res.status(404)
