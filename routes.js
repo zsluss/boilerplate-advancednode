@@ -68,12 +68,7 @@ module.exports = function (app, myDataBase) {
     res.redirect('/');
 });
 
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-    res.redirect('/');
-  };
+
 
  app.route('/auth/github')
   .get(passport.authenticate('github'))
@@ -96,5 +91,10 @@ app.route('/chat')
   });
 }
 
-
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect('/');
+  };
 
